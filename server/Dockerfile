@@ -1,17 +1,19 @@
 FROM ubuntu:latest as build
 
-RUN apt-get update 
-RUN apt-get install openjdk-21-jdk -y
+RUN apt-get update && apt-get install -y openjdk-11-jdk
+
+WORKDIR /app
 
 COPY . .
 
-RUN apt-get install maven -y
-RUN mvn clean install
+RUN apt-get install -y maven && mvn clean install
 
-FROM openjdk:21-slim
+FROM openjdk:11-slim
 
 EXPOSE 8080
 
-COPY --from=build /target/server-0.0.1-SNAPSHOT.jar app.jar
+WORKDIR /app
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+COPY --from=build /app/target/server-0.0.1-SNAPSHOT.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
