@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  app:
+    image: blogserver
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target:/app
