@@ -10,7 +10,7 @@ COPY ./src /app/src
 
 RUN mvn package -DskipTests
 
-FROM openjdk:17-jre-slim
+FROM maven:3.8.4-openjdk-17 AS runtime
 
 WORKDIR /app
 
