@@ -1,18 +1,14 @@
-FROM maven:3.8.4-openjdk-21 AS build
+FROM ubuntu:latest as build
 
-COPY ./pom.xml /app/
+RUN apt-get update 
+RUN apt-get install openjdk-21-jdk -y
 
-WORKDIR /app
+COPY . .
 
-RUN mvn dependency:go-offline
+RUN apt-get install maven -y
+RUN mvn clean install
 
-COPY ./src /app/src
-
-RUN mvn package -DskipTests
-
-FROM openjdk:21-jre-slim
-
-WORKDIR /app
+FROM openjdk:21-slim
 
 COPY --from=build /app/target/*.jar app.jar
 
