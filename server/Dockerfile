@@ -1,4 +1,4 @@
-FROM maven:3.8.4-openjdk-21-slim AS build
+FROM maven:3.8.4-openjdk-17 AS build
 
 COPY ./pom.xml /app/
 
@@ -10,7 +10,7 @@ COPY ./src /app/src
 
 RUN mvn package -DskipTests
 
-FROM openjdk:21-jre-slim
+FROM openjdk:17-jre-slim
 
 WORKDIR /app
 
