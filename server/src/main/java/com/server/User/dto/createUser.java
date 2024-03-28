@@ -43,7 +43,7 @@ public class createUser {
         return this.isAdm;
     }
 
-    public userEntity toPessoa (){
+    public userEntity toUser (){
         return new userEntity(
             this.email,
             this.name,
