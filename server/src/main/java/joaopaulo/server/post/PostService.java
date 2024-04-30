@@ -5,11 +5,13 @@ import joaopaulo.server.category.entities.Category;
 import joaopaulo.server.post.dto.CreatePost;
 import joaopaulo.server.post.entities.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,5 +42,9 @@ public class PostService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esse post não existe");
         }
         repository.delete(post);
+    }
+
+    public List<Post> find(){
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 }

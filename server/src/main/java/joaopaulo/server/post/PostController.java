@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/post")
@@ -21,6 +23,11 @@ public class PostController {
     @PostMapping()
     public ResponseEntity<Post> create(@RequestBody CreatePost dto){
         return ResponseEntity.status(201).body(service.create(dto));
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Post>> find(){
+        return ResponseEntity.ok(service.find());
     }
 
     @DeleteMapping("/{slug}")

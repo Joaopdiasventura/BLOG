@@ -14,7 +14,7 @@ RUN mvn clean install
 
 FROM openjdk:21-slim
 
-EXPOSE 10000
+EXPOSE 8080
 
 COPY --from=build /target/server-0.0.1-SNAPSHOT.jar app.jar
 
