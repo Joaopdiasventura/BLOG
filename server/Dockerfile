@@ -6,8 +6,11 @@ RUN apt-get install openjdk-21-jdk -y
 COPY . .
 
 ARG DATABASE_URL
+ARG SECRET
 
 ENV DATABASE_URL=${DATABASE_URL}
+
+ENV SECRET=${SECRET}
 
 RUN apt-get install maven -y
 RUN mvn clean install
