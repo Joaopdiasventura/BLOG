@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Validated
@@ -44,7 +43,19 @@ public class PostService {
         repository.delete(post);
     }
 
-    public List<Post> find(){
+    public Post find(String slug){
+        Post post = repository.findBySlug(slug);
+        if (post == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esse post não existe");
+        }
+        return post;
+    }
+
+    public List<Post> findAll(){
         return repository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+    }
+
+    public List<Post> findByCategory(String slug){
+        return repository.findByFkCategorySlug(slug, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 }

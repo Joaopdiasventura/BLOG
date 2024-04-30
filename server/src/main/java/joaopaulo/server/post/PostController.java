@@ -26,13 +26,23 @@ public class PostController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Post>> find(){
-        return ResponseEntity.ok(service.find());
+    public ResponseEntity<List<Post>> findAll(){
+        return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/slug/{slug}")
+    public ResponseEntity<Post> find(@PathVariable String slug){
+        return ResponseEntity.ok(service.find(slug));
     }
 
     @DeleteMapping("/{slug}")
     public ResponseEntity<Message> delete(@PathVariable String slug){
         service.delete(slug);
         return ResponseEntity.ok(new Message("Post deletado com sucesso"));
+    }
+
+    @GetMapping("/category/{slug}")
+    public ResponseEntity<List<Post>> findByCategory(@PathVariable String slug){
+        return ResponseEntity.ok(service.findByCategory(slug));
     }
 }
