@@ -1,4 +1,4 @@
-package joaopaulo.server.user.entitys;
+package joaopaulo.server.user.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

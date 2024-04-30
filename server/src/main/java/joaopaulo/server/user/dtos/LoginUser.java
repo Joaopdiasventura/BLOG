@@ -1,7 +1,6 @@
 package joaopaulo.server.user.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-import joaopaulo.server.user.entitys.User;
 import lombok.*;
 
 @Getter

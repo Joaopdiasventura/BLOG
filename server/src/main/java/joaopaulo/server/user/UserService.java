@@ -2,7 +2,7 @@ package joaopaulo.server.user;
 
 import joaopaulo.server.user.dtos.CreateUser;
 import joaopaulo.server.user.dtos.LoginUser;
-import joaopaulo.server.user.entitys.User;
+import joaopaulo.server.user.entities.User;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

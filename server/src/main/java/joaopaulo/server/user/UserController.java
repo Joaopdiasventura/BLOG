@@ -2,7 +2,7 @@ package joaopaulo.server.user;
 
 import joaopaulo.server.user.dtos.CreateUser;
 import joaopaulo.server.user.dtos.LoginUser;
-import joaopaulo.server.user.entitys.User;
+import joaopaulo.server.user.entities.User;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin("*")
+@Validated
 public class UserController {
 
     @Autowired
@@ -29,14 +30,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> create(@RequestBody @Validated @NonNull CreateUser dto){
+    public ResponseEntity<User> create(@RequestBody @NonNull CreateUser dto){
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         User user = service.create(dto);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody @Validated @NonNull LoginUser dto){
+    public ResponseEntity<User> login(@RequestBody @NonNull LoginUser dto){
         User user = service.login(dto);
         if (!(passwordEncoder.matches(dto.getPassword(), user.getPassword()))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Senha incorreta");
