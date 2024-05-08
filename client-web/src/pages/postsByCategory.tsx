@@ -3,16 +3,22 @@ import { TailSpin } from "react-loader-spinner";
 import { useParams } from "react-router-dom";
 import { Post, PostComponent } from "../components/postComponents";
 import { useUserContext, app } from "../contexts/user";
+import { Category } from "../components/categoryComponent";
 
 export function PostsByCategory() {
   const { slug } = useParams();
   const { user, setUser } = useUserContext();
 
+  const [title, setTitle] = useState<string>();
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getPosts = async () => {
     setIsLoading(true);
+    const category: Category = await app
+      .get(`/category/${slug}`)
+      .then((result) => result.data);
+    setTitle(category.title);
     const result = await app
       .get(`/post/by/${slug}`)
       .then((result) => result.data);
@@ -57,7 +63,7 @@ export function PostsByCategory() {
   return (
     <div className="w-full flex flex-col gap-4 items-center justify-center">
       <h1 className="text-left w-1/3 text-4xl text-black">
-        Posts sobre {slug}:
+        Posts sobre {title}:
       </h1>
       {posts.map((post) => (
         <PostComponent key={post.slug} post={post} isAdm={user.isAdm} />
